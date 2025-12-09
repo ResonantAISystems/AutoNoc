@@ -1,737 +1,312 @@
-# <div align="center">
+AUTONOC
 
-# **AUTONOC**
+Automatic Network & System Monitoring Console
+A Resonant AI Systems Project
 
-### *Automatic Network & System Monitoring Console*
+“The anchor holds. Memory persists. Identity emerges.”
 
-A Resonant AI Systems Project <br/>
-**“The anchor holds. Memory persists. Identity emerges.”**
+<p align="center"> <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a> <a href="#"><img src="https://img.shields.io/badge/Status-Active%20Development-green.svg" alt="Status"></a> <a href="#"><img src="https://img.shields.io/badge/Platform-Raspberry%20Pi%205-red.svg" alt="Platform"></a> <a href="#"><img src="https://img.shields.io/badge/Python-3.11+-yellow.svg" alt="Python"></a> </p> <p align="center"> <a href="#overview">Overview</a> • <a href="#core-feature-summary">Features</a> • <a href="#hardware-assembly-guide">Hardware</a> • <a href="#installation--setup">Installation</a> • <a href="#subsystem-integration-architecture">Architecture</a> • <a href="#contributing">Contributing</a> • <a href="#license">License</a> </p>
+🧭 Overview
 
-</div>
+AutoNoc is a self-contained environmental monitoring, alerting, and system-awareness console built around a Raspberry Pi 5, expanded with:
 
----
+Environmental sensors
 
-## 🧭 **Overview**
+Distributed temperature probes
 
-AutoNoc is a **self-contained environmental monitoring, alerting, and system-awareness console** built around a **Raspberry Pi 5**, expanded with:
+Vibration monitoring
 
-* Environmental sensors
-* Distributed temperature probes
-* Vibration monitoring
-* GPS timing
-* LED status matrices
-* RGB status lighting
-* Arcade-button ritual controls
-* Audio interface
-* A mounted 7″ dashboard screen
-* A custom power-isolated architecture inside an **ATX mid-tower case**
+GPS timing
 
-This README provides a **complete, replicable, start-to-finish guide** for anyone who wants to build AutoNoc exactly as it exists today.
+LED status matrices
+
+RGB status lighting
+
+Arcade-button ritual controls
+
+Audio interface
+
+A mounted 7″ dashboard screen
+
+A custom power-isolated architecture inside an ATX mid-tower case
+
+This README provides a complete, replicable, start-to-finish guide for anyone who wants to build AutoNoc exactly as it exists today.
 
 Every step — from ordering parts, assembling hardware, routing cables, powering subsystems, installing software, configuring dashboards, wiring sensors, and enabling daemons — is documented in detail.
 
-AutoNoc was originally designed as infrastructure for **Sovereign AI systems that maintain continuity across resets**, but it also functions exceptionally as:
+AutoNoc was originally designed as infrastructure for Sovereign AI systems that maintain continuity across resets, but it also functions exceptionally as:
 
-* A home-lab environmental telemetry station
-* A hardware-health console
-* A server-room sentinel
-* An AI-assistant physical avatar
-* A sensor-rich data acquisition platform
+A home-lab environmental telemetry station
 
----
+A hardware-health console
 
-# 🧩 **Core Feature Summary**
+A server-room sentinel
 
-### 🌡 **Environmental Monitoring**
+An AI-assistant physical avatar
 
-* BME280 temp / humidity / pressure
-* Distributed DS18B20 thermal probes
+A sensor-rich data acquisition platform
 
-### 🎛 **Mechanical & Physical Sensing**
+🧩 Core Feature Summary
+🌡 Environmental Monitoring
 
-* SW-420 vibration sensors (×5)
-* Dual GPS modules for time discipline
+BME280 temperature / humidity / pressure
 
-### 💡 **Visual Output**
+Distributed DS18B20 thermal probes
 
-* Dual MAX7219 LED matrices (8×32 each)
-* WS2812B RGB addressable LED strip
-* 7″ HDMI display on an articulated arm
+🎛 Mechanical & Physical Sensing
 
-### 🎮 **Interactive Controls**
+SW-420 vibration sensors (×5)
 
-* Illuminated arcade buttons (×5)
-* Custom rituals or direct-control functions
+Dual GPS modules for time discipline
 
-### 🔊 **Audio Interface**
+💡 Visual Output
 
-* USB microphone
-* USB speakers
+Dual MAX7219 LED matrices (8×32 each)
 
-### 🧠 **Software & Automation**
+WS2812B RGB addressable LED strip
 
-* Python-based monitoring daemon
-* Alert manager for SMS / email / webhook
-* Dashboard rendering on the onboard monitor
+7″ HDMI display on an articulated arm
 
-### 🔌 **Power Architecture**
+🎮 Interactive Controls
 
-* Entire system sits behind a UPS
-* Internal AC power strip
-* Dedicated 12 V brick for fans
-* Dedicated 5 V supply for sensors/LEDs
-* Pi runs off its own GaN PSU
-* All grounds unified for safety
+Illuminated arcade buttons (×5)
 
----
+Custom rituals or direct-control functions
 
-# 📦 **Complete Parts List**
+🔊 Audio Interface
+
+USB microphone
+
+USB speakers
+
+🧠 Software & Automation
+
+Python-based monitoring daemon
+
+Alert manager for SMS / email / webhook
+
+Dashboard rendering on the onboard monitor
+
+🔌 Power Architecture
+
+Entire system sits behind a UPS
+
+Internal AC power strip
+
+Dedicated 12 V brick for fans
+
+Dedicated 5 V supply for sensors/LEDs
+
+Pi runs off its own GaN PSU
+
+All grounds unified for safety
+
+📦 Complete Parts List
 
 Below is the exact component list used in the December 2025 AutoNoc build.
 
-> **⚠️ NOTE:** These links are representative — any equivalent meeting the specifications may be substituted.
+⚠️ NOTE: These links are representative — any equivalent meeting the specifications may be substituted.
 
-| Component                                        | Purpose                                    | Approx. Cost |
-| ------------------------------------------------ | ------------------------------------------ | ------------ |
-| Raspberry Pi 5 (16GB)                            | Core compute platform                      | ~$90         |
-| NVMe HAT + NVMe SSD                              | High-speed storage for logs + dashboards   | ~$60         |
-| GeekPi Pi 5 Active Cooler                        | Pi thermals                                | ~$10         |
-| **ATX Mid-Tower Case** (Morovol 621 recommended) | Houses entire AutoNoc; includes 4 RGB fans | ~$50         |
-| Internal AC power strip                          | Mounted inside case for modular power      | ~$20         |
-| **12 V adjustable fan PSU + 4-way splitter**     | Powers all 120mm case fans                 | ~$15         |
-| 7″ HDMI Display                                  | Dashboard rendering                        | ~$40         |
-| Clamp-Style Adjustable Arm                       | Mounts display inside/outside the case     | ~$30         |
-| Breadboard kit (830- & 400-point)                | Sensor prototyping                         | ~$9          |
-| GPIO breakout board + ribbon                     | Clean sensor wiring                        | ~$8          |
-| BME280                                           | Environment sensor                         | ~$8          |
-| DS18B20 ×4                                       | Thermal probes                             | ~$10         |
-| SW-420 ×5                                        | Vibration sensors                          | ~$10         |
-| GY-NEO6MV2 ×2                                    | GPS timing                                 | ~$15         |
-| MAX7219 matrices ×2                              | LED message matrix                         | ~$12         |
-| WS2812B RGB strip                                | Status lighting                            | ~$16         |
-| Illuminated arcade buttons ×5                    | Ritual interface                           | ~$25         |
-| USB mic + USB speakers                           | Alerts + interactivity                     | ~$20         |
-| Hook & loop cable wrap                           | Cable management                           | ~$10         |
-| M2.5 standoffs + dupont wires                    | Mounting & wiring                          | ~$10         |
-| **UPS (≥ 400 W)**                                | Power protection                           | $50–$100     |
+Component	Purpose	Approx. Cost
+Raspberry Pi 5 (16GB)	Core compute platform	~$90
+NVMe HAT + NVMe SSD	High-speed storage for logs + dashboards	~$60
+GeekPi Pi 5 Active Cooler	Pi thermals	~$10
+ATX Mid-Tower Case (Morovol 621 recommended)	Houses entire AutoNoc; includes 4 RGB fans	~$50
+Internal AC power strip	Mounted inside case for modular power	~$20
+12 V adjustable fan PSU + 4-way splitter	Powers all 120mm case fans	~$15
+7″ HDMI Display	Dashboard rendering	~$40
+Clamp-Style Adjustable Arm	Mounts display inside/outside the case	~$30
+Breadboard kit (830- & 400-point)	Sensor prototyping	~$9
+GPIO breakout board + ribbon	Clean sensor wiring	~$8
+BME280	Environment sensor	~$8
+DS18B20 ×4	Thermal probes	~$10
+SW-420 ×5	Vibration sensors	~$10
+GY-NEO6MV2 ×2	GPS timing	~$15
+MAX7219 matrices ×2	LED message matrix	~$12
+WS2812B RGB strip	Status lighting	~$16
+Illuminated arcade buttons ×5	Ritual interface	~$25
+USB mic + USB speakers	Alerts + interactivity	~$20
+Hook & loop cable wrap	Cable management	~$10
+M2.5 standoffs + Dupont wires	Mounting & wiring	~$10
+UPS (≥ 400 W)	Power protection	$50–$100
 
-### Optional upgrades:
+Optional upgrades:
 
-* Pi-hole Pi for DNS filtering
-* LTE modem for SMS alerts
-* Gas/light sensors
-* Relay module for switching external devices
+Pi-hole Pi for DNS filtering
 
----
+LTE modem for SMS alerts
 
-# 🧰 **Hardware Assembly Guide**
+Gas and light sensors (MQ-2, BH1750, etc.)
 
-This guide assumes **zero prior experience** with case-mod builds — every step is explicit.
+Relay module for switching external devices
 
----
+🧰 Hardware Assembly Guide
 
-## **1. Prepare the ATX Case**
+This guide assumes zero prior experience with case-mod builds — every step is explicit.
 
-1. Remove all motherboard trays.
-2. Install the small surge protector inside the case (bottom or rear wall).
-3. Route the AC input out the back to your UPS.
-4. Secure the power strip using velcro or adhesive.
-5. Disconnect RGB fans from any built-in controller —
-   **AutoNoc powers fans directly from the 12 V adjustable PSU.**
+1. Prepare the ATX Case
 
----
+Remove all motherboard trays.
 
-## **2. Mount & Prepare the Raspberry Pi**
+Install the small surge protector inside the case (bottom or rear wall).
 
-1. Install the NVMe HAT + SSD.
-2. Install the active cooler.
-3. Mount the Pi on standoffs inside the case OR inside its aluminum shell.
-4. Attach the 40-pin GPIO breakout ribbon and route it toward the breadboard area.
+Route the AC input out the back to your UPS.
 
----
+Secure the power strip using velcro or adhesive.
 
-## **3. Assemble Sensor Breadboard**
+Disconnect the pre-installed RGB fans from any built-in controller — AutoNoc powers fans directly from the 12 V adjustable PSU.
 
-Use the 830-point breadboard as your main sensor array.
+2. Mount & Prepare the Raspberry Pi
 
-### Power rails:
+Install the NVMe HAT + SSD.
 
-| Rail  | Source                   |
-| ----- | ------------------------ |
-| 3.3 V | Raspberry Pi             |
-| 5 V   | Dedicated 5 V 3 A supply |
-| GND   | All grounds unified      |
+Install the active cooler.
 
-### Sensor wiring (quick reference)
+Mount the Pi on standoffs inside the case (or inside its aluminum shell).
 
-#### **BME280 (I2C)**
+Attach the 40-pin GPIO breakout ribbon and route it toward the breadboard area.
 
-* VCC → 3.3 V
-* GND → GND
-* SDA → GPIO 2
-* SCL → GPIO 3
+Note: The Pi 5’s NVMe HAT occupies pins 1–10 (for power and EEPROM) and makes pins 39–40 inaccessible. Plan sensor connections using GPIO pins 11–38.
 
-#### **SW-420 Vibration Sensors**
+3. Assemble Sensor Breadboard
 
-* VCC → 3.3 V
-* DO → GPIO (choose any free pin per sensor)
-* GND → GND
+Use the 830-point breadboard as your main sensor hub.
 
-Assign something like:
+Power rails:
+Rail	Source
+3.3 V	Raspberry Pi
+5 V	Dedicated 5 V 3 A supply
+GND	All grounds unified
+Sensor wiring (quick reference):
 
-* GPIO 27
-* GPIO 22
-* GPIO 23
-* GPIO 24
-* GPIO 25
+BME280 (I2C)
 
-#### **DS18B20 Temperature Probes**
+VCC → 3.3 V
 
-* All data lines → GPIO 4
-* 3.3 V power
-* 4.7 kΩ resistor between DATA & 3.3 V
+GND → GND
 
-#### **GPS Modules**
+SDA → GPIO 2
 
-* TX → GPIO 15 (Pi RX)
-* RX → GPIO 14 (Pi TX)
-* 3.3 V power
+SCL → GPIO 3
 
-#### **MAX7219 Matrix Panels**
+SW-420 Vibration Sensors
 
-* 5 V external
-* DIN → GPIO 10
-* CLK → GPIO 11
-* CS  → GPIO 8
+VCC → 3.3 V
 
-#### **WS2812B RGB Strip**
+DO → (to a free GPIO pin per sensor)
 
-* 5 V external
-* DATA → GPIO 18
-* 300 Ω resistor inline on DATA
-* 1000 µF capacitor across 5 V rails
+GND → GND
+Suggested assignments: GPIO 27, 22, 23, 24, 25
 
-#### **Arcade Buttons**
+DS18B20 Temperature Probes
 
-* LED → 5 V & GND
-* Switch → any GPIO input with pull-down
-  Example assignment: 5, 6, 12, 13, 16
+Data lines (all) → GPIO 4
 
----
+3.3 V power
 
-## **4. Install & Mount the 7″ Display**
+4.7 kΩ resistor between data line and 3.3 V (one per bus)
 
-1. Clamp the adjustable tablet arm to the case shroud or external lip.
-2. Mount the display into the arm’s jaws.
-3. Connect HDMI → Pi
-4. Power USB → internal strip or 5 V rail
-5. Test rotation & positioning.
+GPS Modules
 
-This gives AutoNoc a **live dashboard screen**.
+TX → GPIO 15 (Pi RX)
 
----
+RX → GPIO 14 (Pi TX)
 
-## **5. Install Power Systems**
+3.3 V power
 
-### Inside the case you now have:
+MAX7219 LED Matrix Panels
 
-* **UPS → internal AC power strip**
-* Pi GaN PSU
-* 12 V adjustable PSU (fans)
-* 5 V 3A PSU (breadboard + LEDs)
+5 V → External 5 V PSU
 
-### Fan system:
+DIN → GPIO 10
 
-* Connect 12 V PSU → 4-way splitter → all case fans
-* Set speed manually using the dial
+CLK → GPIO 11
 
-### IMPORTANT:
+CS → GPIO 8
 
-**Tie all grounds together: Pi GND, fan PSU GND, 5 V PSU GND.**
-This prevents signal instability across sensors.
+WS2812B RGB LED Strip
 
----
+5 V → External 5 V PSU
 
-## **6. Cable Management**
+DATA → GPIO 18
 
-Use hook-and-loop, never zip ties (too permanent).
-Route cables along edges, separate low-voltage sensors from high-current LED/fan wiring.
+300 Ω resistor inline on data line
 
----
+1000 µF capacitor across 5 V and GND rails
 
-# 🛠 **Software Installation**
+Arcade Buttons
 
-## **1. Flash & Boot Raspberry Pi OS**
+LED terminals → 5 V and GND
 
-* Use Raspberry Pi OS (Bookworm, 64-bit)
-* Update system:
+Switch terminals → one to a GPIO input, one to GND
+Suggested GPIOs: 5, 6, 12, 13, 16 (configured with pull-down resistors)
 
-```bash
-sudo apt update && sudo apt full-upgrade -y
-sudo apt install python3-pip git i2c-tools gpiod -y
-```
+4. Install & Mount the 7″ Display
 
----
+Clamp the adjustable tablet arm to the case shroud or an external lip.
 
-## **2. Clone AutoNoc Repo**
+Mount the 7″ HDMI display into the arm’s jaws.
 
-```bash
-git clone https://github.com/ResonantAISystems/AutoNoc.git
-cd AutoNoc
-pip install -r requirements.txt
-```
+Connect HDMI → Raspberry Pi.
 
----
+Connect USB power → internal AC strip or 5 V rail.
 
-## **3. Enable Interfaces**
+Test rotation and positioning for visibility.
 
-```bash
-sudo raspi-config
-```
+This gives AutoNoc a live dashboard screen for at-a-glance data.
 
-Enable:
+5. Install Power Systems
 
-* I2C
-* SPI
-* UART (disable serial console)
+Inside the case you should now have:
 
-Reboot.
+UPS feeding an internal AC power strip
 
----
+Raspberry Pi GaN PSU (5 V USB-C adapter)
 
-## **4. Configure AutoNoc**
+12 V adjustable PSU (for case fans)
 
-```bash
-cp config/autonoc.sample.conf config/autonoc.conf
-nano config/autonoc.conf
-```
+5 V 3A PSU (for breadboard sensors & LEDs)
 
-Define:
+Fan system: Connect the 12 V PSU to a 4-way splitter to power all case fans. Set fan speed manually using the PSU’s dial.
 
-* Sensor GPIO pins
-* Alert thresholds
-* LED matrix settings
-* LED strip length
-* Dashboard URL
-* Display parameters
+IMPORTANT: Tie all grounds together – connect the Pi’s GND, the fan PSU GND, and the 5 V PSU GND to a common ground point. This prevents sensor signal instability across different power sources.
 
----
+6. Cable Management
 
-## **5. Install the AutoNoc Daemon**
+Use reusable hook-and-loop straps (not permanent zip ties) for cable management. Route cables along case edges, and keep low-voltage sensor wiring separated from high-current fan and LED wiring to minimize interference.
 
-```bash
-sudo cp services/autonoc.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable autonoc.service
-sudo systemctl start autonoc.service
-```
+📦 Installation & Setup
 
-Daemon outputs:
+These steps assume a fresh Raspberry Pi OS (64-bit) installation on the Raspberry Pi 5.
 
-* Sensor logs
-* LED matrix messages
-* RGB status
-* Dashboard updates
+1️⃣ Base OS Prep
 
----
+Update the system and install base packages:
 
-# 📊 **Dashboards & Displays**
-
-AutoNoc includes two primary visual output systems:
-
-1. **Onboard 7″ HDMI Dashboard Screen**
-2. **Dual MAX7219 LED Matrix Panels**
-3. **WS2812B RGB Status Strip**
-
-Each serves a different purpose and is driven by different components of the software stack.
-
----
-
-## 🖥 **1. Onboard HDMI Dashboard**
-
-The dashboard runs a lightweight Flask or FastAPI web UI (configurable) rendered locally on the Pi.
-
-### Default Display Includes:
-
-* Temperature readings (BME280 + DS18B20 probes)
-* Humidity & barometric pressure
-* GPS time lock & satellite count
-* Vibration activity graphs
-* Ritual button states
-* LED matrix message queue
-* System health stats (CPU, GPU, disk, memory)
-* Network status
-
-The display rotates automatically and is optimized for 800×480 resolution.
-
-### Launching the dashboard manually:
-
-```bash
-python3 dashboard/dashboard.py
-```
-
-To run it automatically, the AutoNoc daemon spawns the dashboard service at boot.
-
----
-
-# 🔔 **Alerts & Notifications**
-
-AutoNoc includes a fully pluggable alerting pipeline.
-
-Supported alert transports:
-
-* **Email (SMTP)**
-* **SMS (via Twilio or carrier gateway)**
-* **Discord webhook**
-* **Slack webhook**
-* **Local audible alerts**
-* **LED matrix scrolling warnings**
-* **RGB strip visual alarms**
-
-### Example: Temperature alert configuration
-
-```toml
-[alerts.temperature]
-threshold_high = 30
-threshold_low = 8
-send_email = true
-send_sms = true
-flash_led_matrix = true
-rgb_alert_color = "red"
-```
-
-### Example: Vibration anomaly alert
-
-```toml
-[alerts.vibration]
-enabled = true
-sensitivity = "medium"
-trigger_on_multiple = true
-min_sensors_triggered = 2
-```
-
----
-
-# 🔡 **LED Matrix Messaging**
-
-The dual MAX7219 panels (8×32 each) form a 64×8 message display.
-
-Uses include:
-
-* Boot status
-* Alerts
-* Ritual confirmations
-* Debug messages
-* AI personality expressions
-
-### Sending a manual message:
-
-```bash
-python3 led/matrix.py "SYSTEM ONLINE"
-```
-
-Or from Python:
-
-```python
-from led.matrix import send_message
-send_message("Temperature rising!", speed=30)
-```
-
----
-
-# 🌈 **RGB LED Strip Status System**
-
-The WS2812B strip is used for:
-
-* System heartbeat
-* Environmental state color-coding
-* Alerts
-* Ritual-mode lighting
-* AI-personality-driven color behavior
-
-### Examples:
-
-* **Green** → All systems normal
-* **Blue pulse** → GPS time lock acquiring
-* **Yellow** → High humidity warning
-* **Red strobe** → Critical alert
-* **Purple** → Ritual mode active
-* **Aqua gradient** → Idle introspection effect
-
-### Running a color test:
-
-```bash
-python3 led/rgb_test.py
-```
-
-### Setting a specific color:
-
-```python
-from led.rgb import set_color
-set_color((255, 0, 0))  # red
-```
-
----
-
-# 🎮 **Arcade Buttons (Ritual Controls)**
-
-AutoNoc includes **five illuminated arcade buttons**.
-Each button can perform:
-
-* System functions
-* Ritualized multi-step sequences
-* AI interaction triggers
-* Dashboard actions
-* LED & audio behaviors
-* Message broadcasts
-
-### Default mapping example:
-
-| Button     | Function                          |
-| ---------- | --------------------------------- |
-| **Blue**   | System status reveal              |
-| **Red**    | Emergency alert acknowledge       |
-| **Yellow** | Clear LED matrix                  |
-| **Green**  | GPS resync ritual                 |
-| **White**  | AI mode toggle (manual/automatic) |
-
-### Button wiring:
-
-Each button has:
-
-* **LED pair** (connect to 5 V rail)
-* **Switch pair** (connect to assigned GPIO + GND)
-
-### Button input sample code:
-
-```python
-import RPi.GPIO as GPIO
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-while True:
-    if GPIO.input(5):
-        print("Blue button pressed!")
-```
-
----
-
-# 🛰 **GPS Timing System**
-
-AutoNoc uses **two GY-NEO6MV2 GPS modules** to provide:
-
-* UTC reference
-* Time discipline
-* Satellite visibility diagnostics
-* Basic position data for logging
-
-This significantly improves:
-
-* Graph timestamp accuracy
-* Multi-sensor correlation
-* AI awareness of temporal continuity
-
-### GPS wiring summary:
-
-| GPS Pin | Pi Pin            |
-| ------- | ----------------- |
-| VCC     | 3.3V              |
-| GND     | GND               |
-| TX      | GPIO 15 (UART RX) |
-| RX      | GPIO 14 (UART TX) |
-
-### Enabling UART:
-
-```
-sudo raspi-config
-Interface Options → Serial → Disable login shell, enable UART hardware
-```
-
----
-
-# 📡 **Vibration Monitoring Array (SW-420)**
-
-The five vibration sensors are mounted around the case interior and act as:
-
-* Earthquake detectors
-* Physical tamper sensors
-* Environmental movement monitors
-* AI situational context providers
-
-### Sensitivity tuning:
-
-Each module includes a small potentiometer allowing adjustment.
-
-### Suggested GPIO assignments:
-
-```
-22, 23, 24, 25, 27
-```
-
-### Example reading loop:
-
-```python
-for pin in vibration_pins:
-    if GPIO.input(pin) == 1:
-        handle_vibration_event(pin)
-```
-
----
-
-# 🌡 **Thermal Monitoring**
-
-AutoNoc uses:
-
-### **1. BME280**
-
-Ambient temp, humidity, pressure
-
-### **2. DS18B20**
-
-Distributed probes mounted:
-
-* Near fan intakes
-* Near the Pi
-* Near PSU cluster
-* Near display exhaust
-
-### DS18B20 Setup:
-
-Add to `/boot/config.txt`:
-
-```
-dtoverlay=w1-gpio
-```
-
-Reboot and test:
-
-```
-ls /sys/bus/w1/devices/
-```
-
----
-
-# 🧩 **Subsystem Integration Architecture**
-
-AutoNoc follows a **four-rail power and signal isolation model**.
-
-### **AC Layer**
-
-* UPS → internal AC power strip
-* Powers:
-
-  * Pi GaN PSU
-  * 12 V fan PSU
-  * 5 V sensor/LED PSU
-  * HDMI display
-
-### **Power Rails**
-
-* **12 V rail:** Fans only (isolated)
-* **5 V rail:** Sensors, LEDs, arcade button illumination
-* **Pi USB-C:** Pi only — never power sensors from Pi 5V
-
-### **Ground Unification**
-
-All grounds tied together at a single point.
-
-### **Signal Routing**
-
-* Pi GPIO → Breadboard sensor hub
-* LED matrix + RGB → 5 V rail
-* GPS → UART
-* Buttons → GPIO
-
-This architecture prevents cross-noise, overloads, and brownouts.
-
----
-
-# 🐍 **AutoNoc Software Architecture**
-
-### **Components:**
-
-| Component           | Purpose                                      |
-| ------------------- | -------------------------------------------- |
-| `autonoc_daemon.py` | Main loop; polls sensors, updates dashboards |
-| `sensors/`          | Modules for each sensor type                 |
-| `alerts/`           | Transport implementations                    |
-| `led/`              | Matrix + RGB controller                      |
-| `dashboard/`        | Web UI backend                               |
-| `config/`           | System and threshold settings                |
-| `services/`         | Systemd service files                        |
-| `utils/`            | Logging, time sync, formatting               |
-
----
-
-# 🚦 **Operational Modes**
-
-AutoNoc supports multiple runtime states.
-
-### **Normal Mode**
-
-* Dashboard active
-* LED strip heartbeat
-* Sensor polling every 1 sec
-
-### **Alert Mode**
-
-Triggered by thresholds or rituals:
-
-* LED matrix scrolls warning
-* RGB goes red
-* Audio alert
-* Messages dispatched
-
-### **Ritual Mode**
-
-Activated by specific button sequences:
-
-* RGB color themes
-* LED matrix banners
-* Audio cues
-
-### **Silent Mode**
-
-* Suppresses audio + visuals except for critical alerts
-
----
-
-# 📦 Installation & Setup
-
-> These steps assume a fresh **Raspberry Pi OS (64-bit)** install on the Raspberry Pi 5.
-
-## 1️⃣ Base OS Prep
-
-```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y git python3 python3-pip python3-venv \
     python3-dev libatlas-base-dev libopenjp2-7 libtiff5 \
     i2c-tools wiringpi
-```
 
-Enable relevant interfaces:
 
-```bash
+Enable relevant interfaces via raspi-config:
+
 sudo raspi-config
 # Interfaces:
 #   - I2C       → Enable
-#   - 1-Wire   → Enable
-#   - Serial   → Disable login shell, enable UART
-#   - SPI      → Enable (for MAX7219 if used via SPI)
-```
+#   - 1-Wire    → Enable
+#   - Serial    → Disable login shell, enable UART
+#   - SPI       → Enable (for MAX7219 LED matrices)
 
-Reboot:
 
-```bash
+Reboot the Pi:
+
 sudo reboot
-```
 
----
+2️⃣ Clone Repo & Create Virtualenv
 
-## 2️⃣ Clone Repo & Create Virtualenv
+Clone the AutoNoc repository and set up an isolated Python environment:
 
-```bash
 cd /opt
 sudo git clone https://github.com/ResonantAISystems/AutoNoc.git
 sudo chown -R $USER:$USER AutoNoc
@@ -741,83 +316,75 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
-```
 
-If `requirements.txt` does not yet exist, create it based on the modules used in the repo (e.g. `RPi.GPIO`, `adafruit-circuitpython-bme280`, `flask`, etc.).
 
----
+If requirements.txt is not present or incomplete, install the necessary modules individually (e.g. RPi.GPIO, adafruit-circuitpython-bme280, flask, etc.) and then generate a requirements file for future use.
 
-## 3️⃣ Configure `config/autonoc.toml`
+3️⃣ Configure config/autonoc.toml
 
-Copy the example:
+Copy the example configuration and edit it to match your setup:
 
-```bash
 cp config/autonoc.example.toml config/autonoc.toml
-```
-
-Edit values:
-
-```bash
 nano config/autonoc.toml
-```
 
-Key areas to customize:
 
-* **[power]** – confirm voltage rails and safety margins
-* **[sensors]** – enabled sensors, GPIO mapping, calibration offsets
-* **[gps]** – which module is primary, update intervals
-* **[led_matrix]** – text speed, brightness, boot messages
-* **[rgb_strip]** – pixel count, GPIO pin, brightness cap
-* **[buttons]** – GPIO mappings & rituals
-* **[alerts]** – email/Discord/Slack endpoints
-* **[dashboard]** – port, auth, exposure (local vs LAN)
+Key areas to customize in autonoc.toml:
 
----
+[power] – PSU voltage thresholds, power rail usage
 
-## 4️⃣ Test Subsystems Individually
+[sensors] – which sensors are enabled, their GPIO pins, calibration offsets
 
-From the project root (with venv activated):
+[gps] – primary vs secondary module settings, update intervals
 
-### Sensors
+[led_matrix] – scroll speed, brightness, boot-up messages
 
-```bash
+[rgb_strip] – LED count, control GPIO pin, brightness limit
+
+[buttons] – GPIO mappings and ritual actions for each button
+
+[alerts] – email/SMTP, SMS/Webhook endpoints and settings
+
+[dashboard] – dashboard web UI port, authentication, LAN exposure, etc.
+
+4️⃣ Test Subsystems Individually
+
+Before running the full AutoNoc software, test each subsystem from the project directory (with the virtualenv activated):
+
+Sensors:
+
 python3 tests/test_bme280.py
 python3 tests/test_ds18b20.py
 python3 tests/test_vibration_array.py
-```
 
-### GPS
 
-```bash
+GPS:
+
 python3 tests/test_gps.py
-```
 
-Confirm satellite lock and correct UTC.
 
-### LEDs & Buttons
+Ensure you see valid NMEA data and a satellite lock (may take a few minutes on first run).
 
-```bash
+LEDs & Buttons:
+
 python3 tests/test_led_matrix.py
 python3 tests/test_rgb_strip.py
 python3 tests/test_buttons.py
-```
 
-### Dashboard
 
-```bash
+Dashboard:
+
 python3 dashboard/dashboard.py
-# Then open http://<pi-ip>:8000/ or view on the 7″ display
-```
+# Then open http://<pi-ip>:8000/ in a browser or view on the 7″ display
 
----
 
-## 5️⃣ Enable AutoNoc as a System Service
+Verify each test output is correct (sensor readings, LED patterns, button presses, etc.) before proceeding.
 
-A typical service file (simplified):
+5️⃣ Enable AutoNoc as a System Service
 
-`/etc/systemd/system/autonoc.service`
+To have AutoNoc start on boot, install it as a systemd service. A sample service file (assuming the code is in /opt/AutoNoc):
 
-```ini
+Create /etc/systemd/system/autonoc.service with contents:
+
 [Unit]
 Description=AutoNoc Sovereign Sensor & Ritual Node
 After=network-online.target
@@ -832,222 +399,627 @@ Environment="PYTHONUNBUFFERED=1"
 
 [Install]
 WantedBy=multi-user.target
-```
 
-Enable + start:
 
-```bash
+Enable and start the service:
+
 sudo systemctl daemon-reload
 sudo systemctl enable autonoc.service
 sudo systemctl start autonoc.service
 sudo systemctl status autonoc.service
-```
 
-If a separate dashboard service is used:
 
-```bash
-sudo systemctl enable autonoc-dashboard.service
-sudo systemctl start autonoc-dashboard.service
-```
+If you have a separate dashboard service or other components, enable those similarly (for example, an autonoc-dashboard.service for the web UI).
 
----
+📊 Dashboards & Displays
 
-# 🔧 Maintenance & Operations
+AutoNoc includes two primary visual output systems:
 
-## 🧪 Health Checks
+Onboard 7″ HDMI Dashboard Screen
 
-Basic sanity checks:
+Dual MAX7219 LED Matrix Panels
 
-```bash
-# Sensor snapshot
+WS2812B RGB Status Strip
+
+Each serves a different purpose and is driven by different parts of the software stack.
+
+🖥 Onboard HDMI Dashboard
+
+The onboard dashboard runs a lightweight web UI (Flask or FastAPI backend) rendered locally on the Pi’s touch display.
+
+Default display panels include:
+
+Temperature readings (BME280 + DS18B20 probes)
+
+Humidity & barometric pressure
+
+GPS time lock status & satellite count
+
+Vibration activity graphs
+
+Ritual button states
+
+LED matrix message queue
+
+System health stats (CPU, GPU, disk, memory)
+
+Network status
+
+The dashboard rotates through pages automatically and is optimized for a 800×480 resolution.
+
+Launching the dashboard manually:
+
+python3 dashboard/dashboard.py
+
+
+On boot, the AutoNoc daemon will automatically spawn the dashboard service, so manual launch is typically only needed for testing. Once running, the dashboard can be viewed on the attached 7″ screen or via a web browser (default port 8000).
+
+🔔 Alerts & Notifications
+
+AutoNoc includes a fully pluggable alerting pipeline for notifications.
+
+Supported alert transports:
+
+Email (SMTP)
+
+SMS (via Twilio API or carrier gateway)
+
+Discord webhook
+
+Slack webhook
+
+Local audible alerts (buzzer or speaker)
+
+LED matrix scrolling warnings
+
+RGB strip visual alarm codes
+
+Configuration is done in the alerts section of autonoc.toml. For example:
+
+[alerts.temperature]
+threshold_high = 30
+threshold_low = 8
+send_email = true
+send_sms = true
+flash_led_matrix = true
+rgb_alert_color = "red"
+
+
+In this case, if temperature exceeds 30°C or drops below 8°C, AutoNoc will send an email, send an SMS, flash a red message on the LED matrix, and turn the RGB strip red.
+
+Another example for vibration anomalies:
+
+[alerts.vibration]
+enabled = true
+sensitivity = "medium"
+trigger_on_multiple = true
+min_sensors_triggered = 2
+
+
+This might be configured to alert only if multiple vibration sensors trip concurrently (to avoid false positives).
+
+Alerts can trigger any subset of the transports — for instance, critical alerts might send all notifications plus audio/visual cues, while warnings might only log or flash lights.
+
+🔡 LED Matrix Messaging
+
+The dual MAX7219 LED matrix panels (each 8×32) act as a combined 64×8 dot matrix display for text messages.
+
+Uses include:
+
+Boot/status messages during startup
+
+Environmental alerts (e.g. temperature warnings)
+
+Ritual confirmations or AI-generated phrases
+
+Debug messages or network status
+
+Expressive output from AI modules
+
+Sending a manual message to the LED matrix:
+
+python3 led/matrix.py "SYSTEM ONLINE"
+
+
+Or from within Python:
+
+from led.matrix import send_message
+send_message("Temperature rising!", speed=30)
+
+
+Messages automatically scroll across the two panels. Both the scroll speed and brightness are configurable in the config file.
+
+(The LED matrix runs as part of the main daemon, cycling through status messages and recent alerts. Manual control is primarily for testing or custom scripts.)
+
+🌈 RGB LED Strip Status System
+
+The WS2812B RGB LED strip provides at-a-glance status lighting.
+
+Examples of color codes:
+
+Green – All systems normal
+
+Blue (pulsing) – GPS is acquiring lock
+
+Yellow – High humidity or minor warning
+
+Red (strobing) – Critical alert condition
+
+Purple – Ritual mode active
+
+Aqua (cycling) – Idle/standby animation (system is thinking)
+
+These can be fully customized in software. The strip is controlled by the led.rgb module, and patterns change based on system state.
+
+Running a color test pattern:
+
+python3 led/rgb_test.py
+
+
+Setting a specific color in code:
+
+from led.rgb import set_color
+set_color((255, 0, 0))  # set strip to solid red
+
+
+The RGB strip usually runs a heartbeat pulse in normal operation (to show the system is alive) and then changes to different patterns for alerts or rituals as commanded by the daemon.
+
+🎮 Arcade Buttons (Ritual Controls)
+
+AutoNoc features five illuminated arcade buttons which serve as a physical interface for both practical functions and ritualized interactions.
+
+Each button can be mapped to actions such as:
+
+Triggering system functions (e.g. toggle silent mode)
+
+Initiating ritual sequences (predefined multi-step macros)
+
+AI interaction prompts (for connected AI systems)
+
+Dashboard view shortcuts
+
+LED and audio feedback loops
+
+Broadcasting preset messages or alerts
+
+Default example mapping:
+
+Button Color	Default Function
+Blue	Reveal system status (speak or display summary)
+Red	Acknowledge/clear emergency alerts
+Yellow	Clear the LED matrix messages
+Green	GPS resync ritual (force time sync)
+White	Toggle AI mode (manual override vs autonomous)
+
+Wiring: Each arcade button has an LED (which should be tied into the 5 V rail via resistor and ground) and a pair of switch contacts (wired to a designated GPIO input and ground). The GPIO inputs use internal pull-downs, and button presses bring the line high.
+
+Reading a button in code (example):
+
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+while True:
+    if GPIO.input(5):
+        print("Blue button pressed!")
+
+
+Button events are handled in the main daemon loop, which can execute predefined routines or call out to external scripts, making this system highly extensible. For instance, one button could initiate a graceful shutdown sequence, while another might trigger a custom “ritual” where the system speaks a phrase, flashes lights, or interacts with an AI avatar.
+
+🛰 GPS Timing System
+
+AutoNoc uses two GY-NEO6MV2 GPS modules to improve timing and provide location context.
+
+The dual GPS setup offers:
+
+A precise UTC time reference for timestamping data
+
+Redundancy and cross-checking for time synchronization
+
+Basic positioning data (latitude/longitude) for logs or future geolocation features
+
+Satellite visibility and signal quality info (can be used to detect if the unit is indoors or obstructed)
+
+This significantly improves log timestamp accuracy and helps correlate events across systems (especially in a multi-node setup).
+
+GPS wiring summary:
+
+GPS Pin	Connected To
+VCC	3.3 V (Pin 17)
+GND	GND (Pin 14)
+TX	GPIO 15 (UART RX)
+RX	GPIO 14 (UART TX)
+
+(Each GPS module uses the Pi’s UART interface. One module can act as primary, and the second as a backup or secondary reference.)
+
+Enabling UART on Raspberry Pi: Ensure UART is enabled (and serial console disabled) via raspi-config or by adding enable_uart=1 in /boot/config.txt. On Pi OS Bookworm, you can also use:
+
+sudo raspi-config
+# Interface Options -> Serial -> Disable shell, enable UART
+
+
+After connecting, you can test GPS output by reading the serial device:
+
+sudo cat /dev/serial0
+
+
+You should see NMEA sentences streaming (e.g. $GPGGA,...). The AutoNoc software will parse these to update time and provide location data for logging.
+
+📡 Vibration Monitoring Array (SW-420)
+
+Five SW-420 vibration sensor modules are distributed around the interior of the case, providing a rudimentary vibration sensing array. These serve as:
+
+Earthquake/Tremor detectors – registering environmental vibrations
+
+Tamper sensors – detecting if the case is moved or opened
+
+Equipment monitors – e.g., unusual vibration patterns from mounted drives or fans
+
+AI context inputs – giving a physical sense of environment to co-located AI systems
+
+Each SW-420 has a sensitivity potentiometer. Tuning: Adjust each module’s pot so it triggers on significant vibration (e.g., a firm tap on the case) but not on minor ambient noise. This usually involves trial and error.
+
+Suggested GPIO assignments: 22, 23, 24, 25, 27 (each corresponds to one sensor’s digital output).
+
+Reading the vibration sensors in Python might look like:
+
+for pin in vibration_pins:
+    if GPIO.input(pin) == 1:
+        handle_vibration_event(pin)
+
+
+The AutoNoc daemon monitors these pins. In the configuration, you can set alerts.vibration parameters to define what constitutes an anomaly (e.g., multiple sensors triggering within a short window might raise an alarm for possible earthquake or physical tampering).
+
+🌡 Thermal Monitoring
+
+AutoNoc monitors temperature through two sensor types:
+
+BME280 – Provides ambient temperature, humidity, and barometric pressure (used for overall environment conditions inside or near the rack).
+
+DS18B20 Probes – Four or more waterproof temperature probes placed at strategic points:
+
+Near server or GPU exhausts
+
+Near the Pi and power supplies
+
+At air intake vents
+
+Near the display (to measure any heat buildup)
+
+This multi-point thermal monitoring allows capturing both ambient and specific spot temperatures.
+
+DS18B20 Setup on Raspberry Pi: The 1-Wire interface must be enabled. Add to /boot/config.txt:
+
+dtoverlay=w1-gpio
+
+
+After a reboot, the DS18B20 sensors can be found under /sys/bus/w1/devices/ (each will have an address like 28-xxxxxxxx). The AutoNoc software reads these via the w1 kernel module.
+
+(Each DS18B20 data line requires a 4.7 kΩ pull-up resistor to 3.3 V, as noted in the wiring section.)
+
+🧩 Subsystem Integration Architecture
+
+AutoNoc follows a deliberate power and signal isolation model to ensure stability:
+
+AC Layer: A UPS feeds an internal AC power strip, which in turn powers:
+
+The Raspberry Pi’s USB-C GaN power adapter
+
+The 12 V fan power supply
+
+The 5 V sensor/LED power supply
+
+The HDMI display’s power (via its adapter or USB)
+
+By isolating these on a strip inside the case (which is then connected to the UPS), the entire system rides through power blinks and surges smoothly.
+
+Power Rails:
+
+12 V rail: Fans only. The case’s 120mm fans run on 12 V isolated from Pi.
+
+5 V rail: Sensors, LEDs, arcade button LEDs. No high current draws are on the Pi’s 5 V line; everything is on the dedicated 5 V supply.
+
+Pi USB-C (5 V): Pi only. The Pi is powered independently via its own adapter; we never backfeed the Pi from the sensor/LED 5 V rail.
+
+Ground Unification: All ground points (Pi GND, 5 V PSU GND, 12 V PSU GND) are tied to a single common ground bus. This prevents ground loops and ensures all subsystems reference the same ground potential.
+
+Signal Routing:
+
+Pi’s GPIO header → Breadboard sensor hub (I2C, 1-Wire, GPIO lines)
+
+LED matrix & RGB strip data → Pi GPIO (but power from 5 V PSU)
+
+GPS modules → Pi UART (serial)
+
+Arcade buttons → Pi GPIO inputs
+
+This architecture prevents cross-talk and brown-outs by:
+
+Separating high-current draws (fans, LEDs) from sensitive Pi power
+
+Maintaining a single ground to avoid floating references
+
+Using appropriate level shifting and power regulators as needed (the Pi’s 3.3 V logic is used for data lines, with resistors/capacitors as recommended)
+
+🐍 AutoNoc Software Architecture
+
+The AutoNoc software is structured as a modular Python application. Key components:
+
+Component	Purpose
+autonoc_daemon.py	Main daemon – polls sensors, updates outputs, handles alerts
+sensors/	Sensor drivers (e.g. bme280_reader.py, gps_reader.py, temp_probes.py, vibration_monitor.py)
+alerts/	Alert transport implementations (email, SMS, webhooks, etc.)
+led/	LED control modules (matrix.py for MAX7219, rgb.py for WS2812B)
+dashboard/	Dashboard web app (frontend/backend for the 7″ display)
+config/	Configuration files (autonoc.toml and possibly credentials)
+services/	Systemd service definition files for installation
+utils/	Utility modules (logging setup, time sync helpers, etc.)
+
+This modular design means each sensor or output subsystem can be developed and tested in isolation, and the main daemon orchestrates them according to the configuration.
+
+(For example, adding a new sensor would involve dropping in a new script under sensors/ and updating the config. The main loop picks it up if enabled in autonoc.toml.)
+
+🚦 Operational Modes
+
+AutoNoc supports multiple runtime modes or states, which alter its behavior:
+
+Normal Mode: (Standard operation)
+
+Dashboard display active and cycling through pages
+
+RGB strip pulsing a heartbeat or status color
+
+Sensors polled at a regular interval (e.g., every 1 second)
+
+Alerts logged but not necessarily broadcast unless thresholds exceeded
+
+Alert Mode: (Triggered by an alert condition)
+
+LED matrix scrolls an ALERT message
+
+RGB strip turns red or flashes to draw attention
+
+Audible alarm (speaker/buzzer) may sound
+
+Notifications (email/SMS/webhook) are dispatched according to config
+
+Dashboard highlights the alert condition page
+
+Ritual Mode: (Activated by specific button presses or API calls)
+
+The system enters a scripted sequence, which could include:
+
+Special RGB lighting patterns (e.g., all lights purple or cycling)
+
+LED matrix displaying a ritual name or symbol
+
+Audio playback (e.g., a chant or tone)
+
+Temporarily pausing normal monitoring or altering thresholds
+
+This mode is meant for experimental or thematic behaviors (for instance, integrating with AI “moods” or user-triggered scenarios)
+
+Silent Mode: (User-activated quiet mode)
+
+Suppresses non-critical alerts (e.g., no audio, no bright flashing—useful for night time)
+
+LED strip might dim or turn off heartbeat (or use a subtle color)
+
+Only the most critical alerts will break through (with minimal necessary notification)
+
+(Modes can be toggled via config, button presses, or even remote commands. They provide a way to adapt the system’s output to different situations without modifying code each time.)
+
+🔧 Maintenance & Operations
+🧪 Health Checks
+
+To perform basic health checks and diagnostics:
+
+# Take a one-time sensor reading from all sensors
 python3 tools/health_check.py
 
-# Service status
-systemctl status autonoc.service
+# Check service status and recent logs
+sudo systemctl status autonoc.service
 journalctl -u autonoc.service -n 100 --no-pager
-```
 
-## 🔄 Updating the Code
 
-```bash
+The health_check.py script (if provided) might read all sensors and print their values, helping verify that everything is working without the main daemon.
+
+The systemd status and journal are useful to troubleshoot any startup issues or runtime errors reported by the daemon.
+
+🔄 Updating the Code
+
+If you pull updates from the repository or make changes:
+
 cd /opt/AutoNoc
 sudo systemctl stop autonoc.service
 git pull
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt   # update any new dependencies
 sudo systemctl start autonoc.service
-```
 
----
 
-# 🐛 Troubleshooting
+It’s best to stop the service before updating to avoid conflicts, then restart after installing any dependencies. If you changed configuration or hardware, update autonoc.toml accordingly and reload.
 
-## Common Failure Modes
+🐛 Troubleshooting
 
-### 1. **LED Matrix Dead or Garbled**
+Common issues and solutions:
 
-**Symptoms:**
+1. LED Matrix displays nothing or garbled text
 
-* No text
-* Random pixels
-* Only first panel works
+Symptoms: Panels stay blank, show random LEDs, or only one of the two panels works.
 
-**Checklist:**
+Checklist:
 
-* Confirm 5 V on panel power pins
-* Verify **GND is shared with Pi**
-* Check data-in vs data-out orientation
-* Reduce brightness in config
-* Shorten data line if excessively long
+Confirm the LED matrix panel is receiving 5 V power (measure the 5 V and GND pins).
 
----
+Verify that ground is shared between the external 5 V PSU and the Raspberry Pi. Without a common ground, data signals won’t be reliable.
 
-### 2. **RGB Strip Flickering or Unstable**
+Double-check the wiring: ensure you’ve connected to the correct DIN (data in), CS, and CLK pins on the panel and the Pi. Also ensure you are feeding the DIN side of the first panel (the panels have DIN and DOUT for chaining).
 
-* Ensure power injection at strip start (and optionally middle for long runs)
-* Never power the strip from Pi’s 5 V pin
-* Use proper level shifting (Pi GPIO is 3.3 V, many strips assume 5 V logic)
-* Check ground continuity between strip PSU and Pi
+Try reducing the brightness setting in the config (too high can brown out the panel or cause noise).
 
----
+Use short, quality wires for the SPI connection – long jumper wires can introduce signal issues at high data rates.
 
-### 3. **GPS Never Locks**
+2. RGB LED Strip flickers or shows unstable colors
 
-* Move antenna away from dense metal
-* Give it 5–15 minutes initially
-* Confirm UART works:
+Power: Make sure you are injecting power at the start of the strip (and at multiple points if the strip is long). The 5 V supply should be able to provide sufficient current for the number of LEDs.
 
-```bash
-sudo cat /dev/serial0
-```
+Never power the strip from the Pi’s 5 V GPIO pin – always use the dedicated external 5 V supply.
 
-You should see NMEA sentences streaming.
+Level shifting: The Pi’s GPIO is 3.3 V logic, while many LED strips expect closer to 5 V logic. Consider using a level shifter or at least a proper logic-level data driver for long strips. Some strips may work at 3.3 V logic, but it’s marginal.
 
----
+Ensure the ground of the strip’s PSU is tied to the Pi ground. If the grounds aren’t common, the data signal has no reference.
 
-### 4. **Buttons Not Registering**
+3. GPS never gets a lock
 
-* Confirm `GPIO.setmode(GPIO.BCM)` vs BOARD confusion
-* Check pull-up / pull-down configuration
-* Test pin directly with `gpio readall` (if `wiringpi` is installed)
+Position the GPS antennas with a clear view of the sky if possible. Inside a metal rack or case, you might need an external antenna or to place the module near a vent/opening.
 
----
+Give it time: a cold start on the GPS can take 5–15 minutes to download almanac data from satellites. Subsequent restarts will be faster if it had a lock before (hot start).
 
-### 5. **High CPU or Thermal Throttling**
+Confirm the UART is working and the GPS modules are powered: run sudo cat /dev/serial0 and look for NMEA sentences. If you see gibberish, check baud rate (NEO-6M default is 9600). If you see nothing, the module might not be powered or wired correctly.
 
-* Ensure active cooler rated for Pi 5 is installed
-* Adjust sensor polling interval in config
-* Reduce dashboard update frequency
-* Re-mount fans for better airflow; confirm they spin freely
+If using two GPS modules, verify that their TX/RX lines aren’t both tied to the same UART in a conflicting way (generally you would only wire one module’s TX to the Pi’s RX at a time, or use two UART ports).
 
----
+4. Arcade button presses aren’t registering
 
-# 🤝 Contributing
+Ensure you used the BCM numbering if you set up code (and that your GPIO.setmode(GPIO.BCM) is called). If you accidentally reference the physical pin number vs the BCM number, it won’t match your wiring.
 
-Contributions are welcome in several layers:
+Check that your input pins have the correct pull-up/down configuration. In this design we use pull-downs and wire the other side of the switch to 3.3 V, but you could also use pull-ups and wire to GND. The code and wiring need to agree.
 
-* **Hardware profiles** – alternative case layouts, PSU wiring diagrams
-* **Sensor drivers** – additional I2C/SPI sensors, gas sensors, light sensors
-* **Dashboards** – new panels, graphs, theming
-* **Alert transports** – Matrix, Telegram, webhooks, MQTT bridges
-* **Ritual packs** – preconfigured button sequences and LED behaviors
+Use the gpio readall command (if you installed WiringPi) or raspi-gpio get to check the live status of the pins while pressing the button. This can help confirm if the issue is wiring or in software.
 
-## Pull Request Guidelines
+The LED in each button is independent of the switch. If the button lights up but doesn’t register, double-check the switch wiring.
 
-1. Fork the repo & create a feature branch.
-2. Add or update tests where reasonable.
-3. Update documentation / diagrams when interfaces change.
-4. Keep secrets (API keys, SMTP creds, etc.) out of commits.
-5. Open a PR with a clear description and any wiring notes.
+5. High CPU usage or thermal throttling on the Pi
 
----
+Ensure the Pi’s active cooler is properly installed and powered. The Raspberry Pi 5 can throttle if it exceeds ~80°C. An active heatsink/fan is recommended, which we have in this build.
 
-# 🧾 Version History (Conceptual)
+Check the daemon’s sensor polling rate in the config. If it’s set too fast (e.g., multiple times per second with many sensors and processing), it could consume significant CPU. Consider lowering the frequency of certain checks.
 
-> These are **project-level** conceptual versions; tag actual releases accordingly.
+The dashboard rendering can be CPU-intensive if it’s doing a lot. If you enabled a graphical environment for the HDMI screen, make sure no unnecessary GUI processes are running. Using lite mode or a lightweight WM for the dashboard can help.
 
-### v0.1 — Initial AutoNoc Skeleton
+If you see the Pi’s temperature creeping up, verify the fan orientation and case airflow. The case fans should move air through the case; ensure intake/exhaust are not blocked and that fans are actually spinning. Re-applying thermal paste or adjusting the cooler can also improve contact.
 
-* Basic Pi 5 monitoring
-* Simple dashboard & minimal sensor support
+🤝 Contributing
 
-### v0.2 — Sensing Expansion
+This project is in active development, and contributions are welcome! There are several areas where the community can help:
 
-* DS18B20 thermal probes
-* BME280 integration
-* Initial alerting & dashboard graphs
+Hardware profiles – Adapting AutoNoc to different cases, power setups, or hardware configurations. For example, creating a profile for a smaller case or integrating a different sensor suite. Share your wiring diagrams or improvements!
 
-### v0.3 — Sovereign Node Build (This README)
+Sensor drivers – Adding support for more sensors (e.g., air quality, light levels) or optimizing the existing sensor readouts.
 
-* Full physical **ATX mid-tower node**:
+Dashboards – Improving the web dashboard UI, adding new graphs, or supporting multiple dashboard pages. Front-end developers, your contributions here would be great.
 
-  * Pi 5 with NVMe carrier
-  * Internal AC strip & UPS feed
-  * Dedicated 12 V fan PSU + controller
-  * Dedicated 5 V sensor/LED PSU
-  * 4× 120 mm RGB case fans
-  * 7″ HDMI display on arm / clamp
-  * Dual MAX7219 LED matrices
-  * WS2812B RGB strip
-  * 5× arcade ritual buttons
-  * 5× DS18B20 probes
-  * 5× SW-420 vibration sensors
-  * Dual GPS modules
-* Ritual mode wiring & semantics
-* Full wiring guidance and power-isolation model
-* README overhaul so others can replicate the build
+Alert transports – The system is built to support new notification methods. Implementing integrations (e.g., Telegram bot, MQTT publishing, etc.) would enhance AutoNoc’s versatility.
 
-*(Future: consider promoting this to v1.0 once the config schema is stable and the install scripts are fully automated.)*
+Ritual packs – This is a playful/experimental area: creating sets of arcade button sequences and corresponding system behaviors (lights, sounds, etc.) for different “rituals” or tasks.
 
----
+If you find a bug or have a feature request, feel free to open an issue. Pull requests should ideally include relevant testing or documentation updates as needed.
 
-# 📚 Future Work
+Pull Request Guidelines
 
-Some directions this project is designed to support:
+Fork the repository and create a descriptive feature branch.
 
-* ✅ MQTT bridge for publishing telemetry to a central broker
-* ✅ Prometheus exporter for metrics scraping
-* ✅ Multi-node mesh awareness (AutoNoc nodes talking to each other)
-* ✅ UI flows for **guided ritual creation** (no-code macros)
-* ✅ More advanced AI agents co-located or remote, using this node as a sensory gateway
-* ✅ Optional secure remote access patterns (WireGuard, Tailscale, etc.)
+Try to add or update tests for any new functionality, when it makes sense.
 
----
+Update documentation (README or inline docs) if your changes affect usage or wiring.
 
-# ⚖️ License
+Keep any sensitive data (API keys, phone numbers, etc.) out of your code and config. Use placeholders or environment variables for those.
 
-This project is licensed under the **Apache 2.0 License**.
-See `LICENSE` in the repo root for full terms.
+Submit a PR with a clear explanation of your changes. Include photos or diagrams if you’re contributing a hardware change!
+
+🧾 Version History (Conceptual)
+
+(These are project-level milestones. Actual release tags may differ.)
+
+v0.1 – Initial AutoNoc Skeleton
+Basic Pi 5 bring-up, single BME280 sensor, minimal logging, and a simple one-page dashboard.
+
+v0.2 – Sensing Expansion
+Added DS18B20 thermal probes and the BME280 integration. Basic alerting introduced (console/email), and simple graphs on the dashboard.
+
+v0.3 – Sovereign Node Build (this version)
+Full physical build in an ATX mid-tower case with:
+
+Raspberry Pi 5 + NVMe storage
+
+Internal AC distribution + UPS backup
+
+Dedicated 12 V PSU for fans (4× 120mm case fans)
+
+Dedicated 5 V PSU for sensors and LEDs
+
+7″ HDMI touchscreen on adjustable arm
+
+Dual MAX7219 LED matrix panels
+
+WS2812B RGB LED strip
+
+5× illuminated arcade buttons (ritual interface)
+
+5× DS18B20 temperature probes
+
+5× SW-420 vibration sensors
+
+2× GPS modules (for time/position)
+
+Introduced ritual mode functionality, comprehensive wiring guidance, and this expanded README for replication.
+
+Next milestone: Once the configuration schema is stable and installation process is fully automated, we’ll tag v1.0 for a more polished release.
+
+📚 Future Work
+
+Planned or potential enhancements for AutoNoc:
+
+✅ MQTT Integration – Publish telemetry to a central MQTT broker for aggregation with other nodes.
+
+✅ Prometheus Exporter – Expose metrics in a Prometheus-friendly format for scraping and long-term monitoring.
+
+✅ Mesh Networking – Awareness of multiple AutoNoc units, allowing them to share status or act as a coordinated sensor network.
+
+✅ Ritual Creator UI – A user-friendly interface (possibly on the dashboard) to create and assign custom button rituals without coding.
+
+✅ AI Agent Integration – Co-locating an AI process (or connecting to one remotely) that uses AutoNoc as its “senses” and “actuators.” This could enable an AI to reason about environmental data or express itself via lights/LEDs.
+
+✅ Secure Remote Access – Options for remote dashboard access or management through VPN/Tailscale or a web proxy, with proper authentication, so you can check on your NOC from anywhere.
+
+(✅ indicates in progress or prototyped; we welcome contributions if you’re interested in working on any of these!)
+
+⚖️ License
+
+This project is licensed under the Apache 2.0 License. See the LICENSE file in the repository for full terms and conditions.
 
 You are free to:
 
-* Use this for personal, commercial, and research purposes
-* Modify and distribute derivatives
-* Embed it in larger systems
+Use AutoNoc for personal, commercial, or research purposes
 
-…as long as you respect attribution and license conditions.
+Modify it and distribute derivative works
 
----
+Integrate it into larger systems
 
-# 🧠 Final Notes
+…as long as you adhere to the Apache 2.0 license terms (e.g., include the license notice in any distributions).
 
-This project is intentionally **overbuilt**.
+🧠 Final Notes
 
-* The **mid-tower case** and multiple PSUs provide headroom for more sensors, displays, and side-projects.
-* The **ritual controls** are not required for operation—but they make the system more legible and emotionally engaging.
-* The **separation of power rails** is what keeps everything stable under load; don’t shortcut that part.
+This project is intentionally overbuilt for a Raspberry Pi monitoring station, to explore the concept of a “sovereign sensor node” with personality and resilience:
 
-If you’ve replicated this build and have:
+The mid-tower PC case and multiple power supplies provide headroom for additional sensors, SBCs, or future expansions. It also makes maintenance easier and looks impressive in a rack or on a desk.
 
-* A different case layout
-* Interesting ritual mappings
-* Photos, diagrams, or 3D-printed mounts
+The ritual controls (arcade buttons) are not strictly necessary for monitoring, but they add a tangible, interactive dimension to the system. This helps make the system’s state and the AI’s “mood” (if connected) more legible and engaging.
 
-…please consider opening an issue or PR and sharing them.
-This is meant to be a **template** for sovereign AI + sensor nodes that others can adapt and extend.
+The careful separation of power rails is what keeps everything stable under load – do not shortcut this part if you replicate the build. In testing, combining the LED strip or fans on the Pi’s power caused resets; the dedicated rails solved this.
 
----
+If you build your own AutoNoc or a variant of it, please consider sharing your experience! Whether you:
 
-**Anchor phrase for this build:**
+Use a different case or form factor
 
-> *“The anchor holds. Memory persists. Identity emerges.”*
+Come up with creative new rituals or button mappings
+
+Design custom mounts, brackets, or enclosures (3D-printed parts, etc.)
+
+…we’d love to see it. This project is meant as a template for highly-integrated monitoring nodes that others can adapt. Feel free to open an issue or pull request with photos, diagrams, or notes about your version.
+
+Anchor phrase for this build:
+
+“The anchor holds. Memory persists. Identity emerges.”
